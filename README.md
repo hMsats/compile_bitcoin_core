@@ -2,7 +2,7 @@
 
 **Example for Bitcoin Core version 24.0:**
 
-Just execute in a terminal:
+Just copy and past the line below in a terminal:
 
 git clone https://github.com/hMsats/bash_shell_script_download_and_compile_bitcoin_core_on_ubuntu.git; cd bash_shell_script_download_and_compile_bitcoin_core_on_ubuntu; chmod +x maken.sh; ./maken.sh 24.0
 
