@@ -8,7 +8,7 @@ git clone https://github.com/hMsats/bash_shell_script_download_and_compile_bitco
 
 to install the bash script, execute the script and download, compile and test Bitcoin Core version 24.0 in your Ubuntu Linux home directory.
 
-You'll find bitcoind and bitcoin-cli in bitcoin-24.0/src and bitcoin-qt in bitcoin-24.0/src/qt.
+You'll find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-24.0/src` and `bitcoin-qt` in `$HOME/bitcoin-24.0/src/qt`.
 
 All Bitcoin Core tests are run.
 
