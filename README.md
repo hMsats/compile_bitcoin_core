@@ -16,7 +16,7 @@ The necessary packages are installed and the appropriate berkeley-db version is 
 
 Bitcoin Core is downloaded from https://bitcoincore.org.
 
-Total compilation time will be on the order of 1 hour or more.
+Total compilation time will be on the order of an hour.
 
 This script was tested on a fairly fresh Ubuntu install (Ubuntu 20.04.4 LTS).
 
