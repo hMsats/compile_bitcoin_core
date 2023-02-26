@@ -233,3 +233,6 @@ if [ $do_test_bitcoin_core = 1 ]; then
 else
   fecho "Skip testing bitcoin core"
 fi
+
+# Move back to the home directory
+cd $HOME
