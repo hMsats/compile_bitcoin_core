@@ -10,7 +10,7 @@ to install the bash script, execute the script and download, compile and test Bi
 
 You'll find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-24.0/src` and `bitcoin-qt` in `$HOME/bitcoin-24.0/src/qt`.
 
-All Bitcoin Core tests are run.
+All Bitcoin Core tests are run (bitcoind and bitcoin-qt).
 
 The necessary packages are installed and the appropriate berkeley-db version is downloaded and compiled.
 
