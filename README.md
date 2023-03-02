@@ -4,7 +4,7 @@
 
 Just copy and past the line below in a terminal (Ctrl Alt T):
 
-git clone https://github.com/hMsats/bash_shell_script_download_and_compile_bitcoin_core_on_ubuntu.git; cd bash_shell_script_download_and_compile_bitcoin_core_on_ubuntu; chmod +x maken.sh; ./maken.sh 24.0
+git clone https://github.com/compile_bitcoin_core.git; cd compile_bitcoin_core; chmod +x maken.sh; ./maken.sh 24.0
 
 to install the bash script, execute the script and download, compile and test Bitcoin Core version 24.0 in your Ubuntu Linux home directory.
 
