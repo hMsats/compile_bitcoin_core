@@ -18,6 +18,8 @@ Bitcoin Core is downloaded from https://bitcoincore.org.
 
 Total compilation time will be on the order of an hour.
 
+The shell script name "maken" means "to make" in Dutch.
+
 This script was tested on a fairly fresh Ubuntu install (Ubuntu 20.04.4 LTS).
 
 This script was recently tested on a fresh Ubuntu install (Ubuntu 22.04.2 LTS).
