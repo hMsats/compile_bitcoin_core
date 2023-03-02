@@ -23,9 +23,9 @@ Total compilation time will be on the order of an hour.
 
 The shell script name "maken" means "to make" in Dutch.
 
-This script was tested on a fairly fresh Ubuntu install (Ubuntu 20.04.4 LTS).
+The script was tested on a fairly fresh Ubuntu install (Ubuntu 20.04.4 LTS).
 
-This script was recently tested on a fresh Ubuntu install (Ubuntu 22.04.2 LTS).
+The script was recently tested on a fresh Ubuntu install (Ubuntu 22.04.2 LTS).
 
 Because of how the checksums are calculated, the script "maken.sh" only works for Bitcoin Core versions 22.0 or higher. 
 To compile earlier versions set "do_check_bitcoin_core_download=0" inside the script "maken.sh".
