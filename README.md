@@ -1,4 +1,4 @@
-# A Bash shell script to download and compile Bitcoin Core on Ubuntu
+# A Bash shell script to download and compile Bitcoin Core on Ubuntu Linux
 
 **Example for Bitcoin Core version 24.0:**
 
