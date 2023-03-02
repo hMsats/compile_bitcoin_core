@@ -90,7 +90,7 @@ if [ $do_download_and_unpack_bitcoin_core = 1 ]; then
   \wget --quiet -O $BITCOIN_NAME.tar.gz https://bitcoincore.org/bin/bitcoin-core-$VERSION/$BITCOIN_NAME.tar.gz
   
   if [ $do_check_bitcoin_core_download = 1 ]; then
-    fecho "Checking the bitcoin core download"
+    fecho "Checking the bitcoin core download (ignore checksum format warning)"
     fexab SHA256SUMS
     \wget --quiet -O SHA256SUMS https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS
     fnexab SHA256SUMS
