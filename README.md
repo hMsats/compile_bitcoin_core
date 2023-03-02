@@ -9,7 +9,7 @@ Just copy and past the 4 lines below in a terminal (Ctrl Alt T) and press Enter:
     chmod +x maken.sh;\
     ./maken.sh 24.0
 
-to install the bash script, execute the script and download, compile and test Bitcoin Core version 24.0 in your Ubuntu Linux home directory.
+to install the bash script, execute the script and download, compile and test Bitcoin Core version 24.0 in your Ubuntu Linux home directory. You may have to answer a few questions.
 
 You'll find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-24.0/src` and `bitcoin-qt` in `$HOME/bitcoin-24.0/src/qt`.
 
