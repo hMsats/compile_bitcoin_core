@@ -7,7 +7,7 @@
 # bitcoin-qt in $HOME/bitcoin-23.0/src/qt when compiling version 23.0
 #
 # Usage:
-# ./maken.sh 23.0
+#  ./maken.sh 23.0
 # to download and compile Bitcoin Core version 23.0
 #
 
