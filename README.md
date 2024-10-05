@@ -1,17 +1,17 @@
 # A Bash shell script to download and compile Bitcoin Core on Ubuntu Linux
 
-**Example for Bitcoin Core version 24.0:**
+**Example for Bitcoin Core version 28.0:**
 
 Just copy and past the 4 lines below in a terminal (Ctrl Alt T) and press Enter:
 
     git clone https://github.com/hMsats/compile_bitcoin_core.git;\
     cd compile_bitcoin_core;\
     chmod +x maken.sh;\
-    ./maken.sh 24.0
+    ./maken.sh 28.0
 
-to install the bash script, execute the script and download, compile and test Bitcoin Core version 24.0 in your Ubuntu Linux home directory. You may have to answer a few questions.
+to install the bash script, execute the script and download, compile and test Bitcoin Core version 28.0 in your Ubuntu Linux home directory. You may have to answer a few questions.
 
-You'll find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-24.0/src` and `bitcoin-qt` in `$HOME/bitcoin-24.0/src/qt`.
+You'll find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-28.0/src` and `bitcoin-qt` in `$HOME/bitcoin-28.0/src/qt`.
 
 All Bitcoin Core tests are run (for bitcoind and bitcoin-qt).
 
