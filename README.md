@@ -21,7 +21,7 @@ The necessary packages are installed and the appropriate berkeley-db version is 
 
 For bitcoin core 28.1 and lower `autotools` is applied, while for 29.0 or higher `cmake`.
 
-Bitcoin Core is downloaded from https://bitcoincore.org.
+Bitcoin Core is downloaded from https://bitcoincore.org/bin.
 
 Total compilation time will be on the order of an hour.
 
