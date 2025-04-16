@@ -137,7 +137,7 @@ if [ $do_install_packages = 1 ]; then
   sudo apt-get install doxygen
 
   # Install other packages
-  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev
+  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev libzmq3-dev
 else
   fecho "Skip installing packages"
 fi
