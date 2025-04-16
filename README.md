@@ -13,7 +13,7 @@ to install the bash script, execute the script and download, compile and test Bi
 
 Voor bitcoin core versions 29.0 or higher you find `bitcoind`, `bitcoin-cli` and `bitcoin-qt` in `$HOME/bitcoin-29.0/build/bin`
 
-Voor bitcoin core versions 28.1 or lower you find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-29.0/src` and bitcoin-qt in `$HOME/bitcoin-29.0/src/qt`
+Voor bitcoin core versions 28.1 or lower you find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-28.1/src` and bitcoin-qt in `$HOME/bitcoin-28.1/src/qt`
 
 All Bitcoin Core tests are run (for bitcoind and bitcoin-qt).
 
