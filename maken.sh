@@ -15,9 +15,9 @@
 # All are 1 by default
 do_download_and_unpack_bitcoin_core=1 # Download and unpack bitcoin core from bitcoincore.org
 do_check_bitcoin_core_download=1
-do_install_packages=0 # Download the packages needed to compile bitcoin core
-do_download_berkeley_db=0 # Download berkeley db needed to compile bitcoin core
-do_compile_berkeley_db=0 # Compile berkeley db needed to compile bitcoin core
+do_install_packages=1 # Download the packages needed to compile bitcoin core
+do_download_berkeley_db=1 # Download berkeley db needed to compile bitcoin core
+do_compile_berkeley_db=1 # Compile berkeley db needed to compile bitcoin core
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
 do_test_bitcoin_core=1 # Test Bitcoin Core
 
@@ -241,6 +241,7 @@ fi
 if [ $do_test_bitcoin_core = 1 ]; then
   fecho "Testing Bitcoin Core"
 
+  cd $HOME/$BITCOIN_NAME
   if [[ -d "cmake" ]]; then
     fecho "Testing bitcoind"
     dnexab $HOME/$BITCOIN_NAME/build/bin
