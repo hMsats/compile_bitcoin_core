@@ -16,8 +16,8 @@
 do_download_and_unpack_bitcoin_core=1 # Download and unpack bitcoin core from bitcoincore.org
 do_check_bitcoin_core_download=1
 do_install_packages=1 # Download the packages needed to compile bitcoin core
-do_download_berkeley_db=1 # Download berkeley db needed to compile bitcoin core
-do_compile_berkeley_db=1 # Compile berkeley db needed to compile bitcoin core
+do_download_berkeley_db=1 # Berkeley db is needed in order to be able to import legacy wallets
+do_compile_berkeley_db=1
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
 do_test_bitcoin_core=1 # Test Bitcoin Core
 
