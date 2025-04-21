@@ -16,6 +16,8 @@
 do_download_and_unpack_bitcoin_core=1 # Download and unpack bitcoin core from bitcoincore.org
 do_check_bitcoin_core_download=1
 do_install_packages=1 # Download the packages needed to compile bitcoin core
+do_download_berkeley_db=1 # Berkeley db is needed in order to be able to import legacy wallets
+do_compile_berkeley_db=1
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
 do_test_bitcoin_core=1 # Test Bitcoin Core
 
@@ -141,6 +143,50 @@ else
 fi
 
 #
+# COMPILE BERKELEY-DB
+#
+
+if [ $do_compile_berkeley_db = 1 ]; then
+  cd $HOME
+  if [ $do_download_berkeley_db = 1 ]; then
+    fecho "Downloading berkeley-db"
+    fexab db-4.8.30.NC.tar.gz
+    \wget http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz
+ 
+    # Check the sha256 checksum of the berkeley-db download
+    res=$(echo '12edc0df75bf9abd7f82f821795bcee50f42cb2e5f76a6a281b85732798364ef  db-4.8.30.NC.tar.gz' | sha256sum -c | sed 's/db-4.8.30.NC.tar.gz: //')
+    if [[ -z "$res" || $res != "OK" ]]; then
+      echo "Download of berkeley-db has the wrong sha256 checksum"
+      echo "Aborting this Bash script"
+      exit
+    fi
+    
+    fecho "Unpacking berkeley-db"
+    dexab db-4.8.30.NC
+    \tar -zxf db-4.8.30.NC.tar.gz
+  else
+    fecho "Skip downloading berkeley-db"
+  fi
+  fecho "Compiling berkeley-db"
+
+  # This error needs to be corrected, see:
+  # https://www.fsanmartin.co/compiling-berkeley-db-4-8-30-in-ubuntu-19/
+  dnexab db-4.8.30.NC
+  cd db-4.8.30.NC
+  \mv dbinc/atomic.h dbinc/atomic.h_orig
+  cat dbinc/atomic.h_orig | sed 's/__atomic_compare_exchange/__atomic_compare_exchange_db/' > dbinc/atomic.h
+
+  cd build_unix
+  mkdir -p build
+  BDB_PREFIX="$HOME/db-4.8.30.NC/build_unix/build/"
+  echo BDB $BDB_PREFIX
+  ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX
+  \make install
+else
+  fecho "Skip compiling berkeley-db"
+fi
+
+#
 # COMPILE BITCOIN CORE
 #
 
@@ -149,24 +195,41 @@ if [ $do_compile_bitcoin_core = 1 ]; then
   dnexab $HOME/$BITCOIN_NAME
   cd $HOME/$BITCOIN_NAME/
 
+  BDB_PREFIX="$HOME/db-4.8.30.NC/build_unix/build"
+  echo BDB $BDB_PREFIX
+
   fecho "Compiling Bitcoin Core"
   # Execute in the Bitcoin directory:
   dnexab $HOME/$BITCOIN_NAME
   cd $HOME/$BITCOIN_NAME/
 
-  fecho "Compile with cmake"
-  if [[ ! -d "cmake" ]]; then
-    fecho "It looks like cmake isn't present. Note: bitcoin core version must be 29.0 or later?"
-    echo "Aborting this Bash script"
-    exit
+  if [[ -d "cmake" ]]; then
+    fecho "Compile with cmake"
+    fecho "Executing cmake -B build including GUI and BerkeleyDB"
+    cmake -B build -DAPPEND_CPPFLAGS="-I$BDB_PREFIX/include/" -DAPPEND_LDFLAGS="-L$BDB_PREFIX/lib/" -DBerkeleyDB_INCLUDE_DIR:PATH="${BDB_PREFIX}/include" -DWITH_BDB=ON -DWITH_ZMQ=ON -DBUILD_GUI=ON
+    fecho "Executing cmake --build build"
+    cmake --build build
+    fecho "Install build (for CLN)"
+    sudo cmake --install build
+    fecho "You find bitcoind, bitcoin-cli and bitcoin-qt in build/bin"
+  else
+    fecho "Compile with Autotools"
+    fecho "Executing autogen.sh before executing make"
+    fnexab ./autogen.sh
+    ./autogen.sh
+
+    fecho "Executing configure before executing make"
+    fnexab ./configure
+    ./configure CPPFLAGS="-I$BDB_PREFIX/include/" LDFLAGS="-L$BDB_PREFIX/lib/" --with-gui
+
+    fecho "Executing make"
+    \make
+    fecho "You find bitcoind and bitcoin-cli in src, bitcoin-qt in src/qt"
+
+    fecho "Install build (for CLN)"
+    sudo make install
   fi
-  fecho "Executing cmake -B build including GUI"
-  cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON
-  fecho "Executing cmake --build build"
-  cmake --build build
-  fecho "Install build (for CLN)"
-  sudo cmake --install build
-  fecho "You find bitcoind, bitcoin-cli and bitcoin-qt in build/bin"
+
 else
   fecho "Skip compiling bitcoin core"
 fi
@@ -179,12 +242,25 @@ if [ $do_test_bitcoin_core = 1 ]; then
   fecho "Testing Bitcoin Core"
 
   cd $HOME/$BITCOIN_NAME
-  fecho "Testing bitcoind"
-  dnexab $HOME/$BITCOIN_NAME/build/bin
-  cd $HOME/$BITCOIN_NAME/build/bin
-  ./test_bitcoin
-  fecho "Testing bitcoin-qt"
-  ./test_bitcoin-qt
+  if [[ -d "cmake" ]]; then
+    fecho "Testing bitcoind"
+    dnexab $HOME/$BITCOIN_NAME/build/bin
+    cd $HOME/$BITCOIN_NAME/build/bin
+    ./test_bitcoin
+    fecho "Testing bitcoin-qt"
+    ./test_bitcoin-qt
+  else
+    fecho "Testing bitcoind"
+    dnexab $HOME/$BITCOIN_NAME/src/test
+    cd $HOME/$BITCOIN_NAME/src/test
+    ./test_bitcoin
+
+    fecho "Testing bitcoin-qt"
+    dnexab $HOME/$BITCOIN_NAME/src/qt/test
+    cd $HOME/$BITCOIN_NAME/src/qt/test
+    ./test_bitcoin-qt
+  fi
+
 else
   fecho "Skip testing bitcoin core"
 fi
