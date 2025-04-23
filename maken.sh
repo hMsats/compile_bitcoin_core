@@ -161,7 +161,7 @@ if [ $do_compile_bitcoin_core = 1 ]; then
     exit
   fi
   fecho "Executing cmake -B build including GUI"
-  cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON
+  cmake -B build -DBUILD_GUI=ON
   fecho "Executing cmake --build build"
   cmake --build build
   fecho "Install build (for CLN)"
