@@ -135,7 +135,7 @@ if [ $do_install_packages = 1 ]; then
   sudo apt-get install doxygen
 
   # Install other packages
-  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev libzmq3-dev
+  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev
 else
   fecho "Skip installing packages"
 fi
@@ -161,7 +161,7 @@ if [ $do_compile_bitcoin_core = 1 ]; then
     exit
   fi
   fecho "Executing cmake -B build including GUI"
-  cmake -B build -DBUILD_GUI=ON
+  cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON
   fecho "Executing cmake --build build"
   cmake --build build
   fecho "Install build (for CLN)"
