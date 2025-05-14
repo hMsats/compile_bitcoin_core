@@ -171,11 +171,11 @@ if [ $do_compile_bitcoin_core = 1 ]; then
     fecho "Strip executables of debug symbols" 
     cd $HOME/$BITCOIN_NAME/build/bin
     fecho "Before stripping" 
-    du bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
+    \du -ms bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
     fecho "Strip" 
     strip bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
     fecho "After stripping" 
-    du bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
+    \du -ms bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
   else
     fecho "Skip strip executables of debug symbols" 
   fi
