@@ -17,6 +17,7 @@ do_download_and_unpack_bitcoin_core=1 # Download and unpack bitcoin core from bi
 do_check_bitcoin_core_download=1
 do_install_packages=1 # Download the packages needed to compile bitcoin core
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
+do_strip_bitcoin_core=1 # Strip the executables of debug symbols
 do_test_bitcoin_core=1 # Test Bitcoin Core
 
 # Echo with sleep and newlines
@@ -162,10 +163,27 @@ if [ $do_compile_bitcoin_core = 1 ]; then
   fi
   fecho "Executing cmake -B build including GUI"
   cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON
+
   fecho "Executing cmake --build build"
   cmake --build build
-  fecho "Install build (for CLN)"
+
+  if [ $do_strip_bitcoin_core = 1 ]; then
+    fecho "Strip executables of debug symbols" 
+    cd $HOME/$BITCOIN_NAME/build/bin
+    fecho "Before stripping" 
+    du bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
+    fecho "Strip" 
+    strip bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
+    fecho "After stripping" 
+    du bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
+  else
+    fecho "Skip strip executables of debug symbols" 
+  fi
+
+  fecho "OFF: Install build (for CLN)"
+  cd $HOME/$BITCOIN_NAME/
   sudo cmake --install build
+   
   fecho "You find bitcoind, bitcoin-cli and bitcoin-qt in build/bin"
 else
   fecho "Skip compiling bitcoin core"
