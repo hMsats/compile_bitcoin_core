@@ -128,15 +128,8 @@ fi
 if [ $do_install_packages = 1 ]; then
   fecho "Installing packages via sudo (password probably needed)"
 
-  # Install doxygen
-  # Adding repository universe is necessary for 20.04.1 LTS
-  # but will be skipped if already present
-  sudo apt-add-repository universe
-  sudo apt-get update
-  sudo apt-get install doxygen
-
-  # Install other packages
-  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev
+  # Install packages
+  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev sqlite3 libsqlite3-dev libzmq3-dev
 else
   fecho "Skip installing packages"
 fi
@@ -163,6 +156,8 @@ if [ $do_compile_bitcoin_core = 1 ]; then
   fi
   fecho "Executing cmake -B build including GUI"
   cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON
+  # faster cmake
+  #cmake -B build -DWITH_ZMQ=ON -DBUILD_TESTS=OFF
 
   fecho "Executing cmake --build build"
   cmake --build build
