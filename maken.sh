@@ -175,18 +175,23 @@ if [ $do_compile_bitcoin_core = 1 ]; then
   else
     fecho "Skip: strip executables of debug symbols" 
   fi
-
    
   fecho "You find bitcoind, bitcoin-cli and bitcoin-qt in build/bin"
 else
   fecho "Skip: compile bitcoin core"
 fi
 
+#
+# INSTALL BITCOIN CORE
+#
+
 if [ $do_install_bitcoin_core = 1 ]; then
-  fecho "Install bitcoin core"
+  fecho "Installing bitcoin core"
 
   cd $HOME/$BITCOIN_NAME/
   sudo cmake --install build
+else
+  fecho "Skip: install bitcoin core"
 fi
 
 #
