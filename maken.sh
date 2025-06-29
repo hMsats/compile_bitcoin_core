@@ -111,7 +111,7 @@ if [ $do_download_and_unpack_bitcoin_core = 1 ]; then
     \rm SHA256SUMS
     \rm SHA256SUMS.asc
   else
-    fecho "Skip: checking the bitcoin core download"
+    fecho "Skip: check the bitcoin core download"
   fi
 
   fecho "Unpacking $HOME/$BITCOIN_NAME.tar.gz in $HOME"
@@ -119,7 +119,7 @@ if [ $do_download_and_unpack_bitcoin_core = 1 ]; then
   \tar -zxf $BITCOIN_NAME.tar.gz
 
 else
-  echo "Skip: downloading and unpacking bitcoin core"
+  echo "Skip: download and unpack bitcoin core"
 fi
 
 #
