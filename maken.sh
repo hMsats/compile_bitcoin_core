@@ -111,7 +111,7 @@ if [ $do_download_and_unpack_bitcoin_core = 1 ]; then
     \rm SHA256SUMS
     \rm SHA256SUMS.asc
   else
-    fecho "Skip checking the bitcoin core download"
+    fecho "Skip: checking the bitcoin core download"
   fi
 
   fecho "Unpacking $HOME/$BITCOIN_NAME.tar.gz in $HOME"
@@ -119,7 +119,7 @@ if [ $do_download_and_unpack_bitcoin_core = 1 ]; then
   \tar -zxf $BITCOIN_NAME.tar.gz
 
 else
-  echo "Skip downloading and unpacking bitcoin core"
+  echo "Skip: downloading and unpacking bitcoin core"
 fi
 
 #
@@ -132,7 +132,7 @@ if [ $do_install_packages = 1 ]; then
   # Install packages
   sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev sqlite3 libsqlite3-dev libzmq3-dev
 else
-  fecho "Skip installing packages"
+  fecho "Skip: installing packages"
 fi
 
 #
@@ -173,13 +173,13 @@ if [ $do_compile_bitcoin_core = 1 ]; then
     fecho "After stripping" 
     \du -ms bitcoin-cli bitcoind bitcoin-qt test_bitcoin bitcoin-tx bitcoin-util bitcoin-wallet
   else
-    fecho "Skip strip executables of debug symbols" 
+    fecho "Skip: strip executables of debug symbols" 
   fi
 
    
   fecho "You find bitcoind, bitcoin-cli and bitcoin-qt in build/bin"
 else
-  fecho "Skip compile bitcoin core"
+  fecho "Skip: compile bitcoin core"
 fi
 
 if [ $do_install_bitcoin_core = 1 ]; then
@@ -204,7 +204,7 @@ if [ $do_test_bitcoin_core = 1 ]; then
   fecho "Testing bitcoin-qt"
   ./test_bitcoin-qt
 else
-  fecho "Skip test bitcoin core"
+  fecho "Skip: test bitcoin core"
 fi
 
 # Move back to the home directory
