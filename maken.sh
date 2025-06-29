@@ -18,7 +18,7 @@ do_check_bitcoin_core_download=1
 do_install_packages=1 # Download the packages needed to compile bitcoin core
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
 do_strip_bitcoin_core=1 # Strip the executables of debug symbols
-do_install_bitcoin_core=1 # Strip the executables of debug symbols
+do_install_bitcoin_core=1 # Intall Bitcoin Core system wide
 do_test_bitcoin_core=1 # Test Bitcoin Core
 
 # Echo with sleep and newlines
