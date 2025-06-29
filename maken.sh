@@ -18,6 +18,7 @@ do_check_bitcoin_core_download=1
 do_install_packages=1 # Download the packages needed to compile bitcoin core
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
 do_strip_bitcoin_core=1 # Strip the executables of debug symbols
+do_install_bitcoin_core=1 # Strip the executables of debug symbols
 do_test_bitcoin_core=1 # Test Bitcoin Core
 
 # Echo with sleep and newlines
@@ -175,13 +176,17 @@ if [ $do_compile_bitcoin_core = 1 ]; then
     fecho "Skip strip executables of debug symbols" 
   fi
 
-  fecho "OFF: Install build (for CLN)"
-  cd $HOME/$BITCOIN_NAME/
-  sudo cmake --install build
    
   fecho "You find bitcoind, bitcoin-cli and bitcoin-qt in build/bin"
 else
-  fecho "Skip compiling bitcoin core"
+  fecho "Skip compile bitcoin core"
+fi
+
+if [ $do_install_bitcoin_core = 1 ]; then
+  fecho "Install bitcoin core"
+
+  cd $HOME/$BITCOIN_NAME/
+  sudo cmake --install build
 fi
 
 #
@@ -199,7 +204,7 @@ if [ $do_test_bitcoin_core = 1 ]; then
   fecho "Testing bitcoin-qt"
   ./test_bitcoin-qt
 else
-  fecho "Skip testing bitcoin core"
+  fecho "Skip test bitcoin core"
 fi
 
 # Move back to the home directory
