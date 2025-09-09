@@ -17,8 +17,8 @@ do_download_and_unpack_bitcoin_core=1 # Download and unpack bitcoin core from bi
 do_check_bitcoin_core_download=1
 do_install_packages=1 # Download the packages needed to compile bitcoin core
 do_legacy_wallets=1
-  do_download_berkeley_db=1 # Berkeley db is needed in order to be able to import legacy wallets
-  do_compile_berkeley_db=1
+do_download_berkeley_db=1 # Berkeley db is needed in order to be able to import legacy wallets
+do_compile_berkeley_db=1
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
 do_strip_bitcoin_core=1 # Strip the executables of debug symbols
 do_test_bitcoin_core=1 # Test Bitcoin Core
@@ -95,23 +95,23 @@ if [ $do_download_and_unpack_bitcoin_core = 1 ]; then
     fexab SHA256SUMS
     \wget --quiet -O SHA256SUMS https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS
     fnexab SHA256SUMS
-    fexab SHA256SUMS.asc
-    \wget --quiet -O SHA256SUMS.asc https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS.asc
-    fnexab SHA256SUMS.asc
-    res0=$(sha256sum --ignore-missing --check SHA256SUMS $BITCOIN_NAME.tar.gz | sed "s/$BITCOIN_NAME.tar.gz: //")
+
+    # sha256sum_string: checksum  filename (2 spaces between checksum and filename)
+    sha256sum_string=$(cat SHA256SUMS | grep $BITCOIN_NAME.tar.gz)
+    # res0 should be equal to OK
+    res0=$(echo $sha256sum_string | sha256sum -c | sed "s/$BITCOIN_NAME.tar.gz: //")
+
     if [[ -z "$res0" || $res0 != "OK" ]]; then
       echo "Download of $BITCOIN_NAME.tar.gz has the wrong sha256 checksum"
       echo "Aborting this Bash script"
       # Don't leave traces. Avoid that we run into trouble when downloading the next version
       \rm SHA256SUMS
-      \rm SHA256SUMS.asc
       exit
     else
       fecho "Download of bitcoin core OK"
     fi
     # Don't leave traces. Avoid that we run into trouble when downloading the next version
     \rm SHA256SUMS
-    \rm SHA256SUMS.asc
   else
     fecho "Skip checking the bitcoin core download"
   fi

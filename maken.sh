@@ -17,6 +17,8 @@ do_download_and_unpack_bitcoin_core=1 # Download and unpack bitcoin core from bi
 do_check_bitcoin_core_download=1
 do_install_packages=1 # Download the packages needed to compile bitcoin core
 do_compile_bitcoin_core=1 # Compile Bitcoin Core
+do_compile_tests=1 # Compile Bitcoin Core test code
+do_compile_gui=1 # Compile Bitcoin Core GUI
 do_strip_bitcoin_core=1 # Strip the executables of debug symbols
 do_install_bitcoin_core=1 # Intall Bitcoin Core system wide
 do_test_bitcoin_core=1 # Test Bitcoin Core
@@ -75,6 +77,11 @@ fi
 VERSION=$1
 BITCOIN_NAME=bitcoin-$VERSION
 
+if [ $do_compile_tests = 0 ]; then
+  fecho "As compile tests is 0, also set running the tests to 0"
+  do_test_bitcoin_core=0 # Test Bitcoin Core
+fi
+
 # Move to the home directory
 cd $HOME
 
@@ -89,27 +96,27 @@ if [ $do_download_and_unpack_bitcoin_core = 1 ]; then
   \wget --quiet -O $BITCOIN_NAME.tar.gz https://bitcoincore.org/bin/bitcoin-core-$VERSION/$BITCOIN_NAME.tar.gz
   
   if [ $do_check_bitcoin_core_download = 1 ]; then
-    fecho "Checking the bitcoin core download (ignore checksum format warning)"
+    fecho "Checking the bitcoin core download"
     fexab SHA256SUMS
     \wget --quiet -O SHA256SUMS https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS
     fnexab SHA256SUMS
-    fexab SHA256SUMS.asc
-    \wget --quiet -O SHA256SUMS.asc https://bitcoincore.org/bin/bitcoin-core-$VERSION/SHA256SUMS.asc
-    fnexab SHA256SUMS.asc
-    res0=$(sha256sum --ignore-missing --check SHA256SUMS $BITCOIN_NAME.tar.gz | sed "s/$BITCOIN_NAME.tar.gz: //")
+    
+    # sha256sum_string: checksum  filename (2 spaces between checksum and filename)
+    sha256sum_string=$(cat SHA256SUMS | grep $BITCOIN_NAME.tar.gz)
+    # res0 should be equal to OK
+    res0=$(echo $sha256sum_string | sha256sum -c | sed "s/$BITCOIN_NAME.tar.gz: //")
+
     if [[ -z "$res0" || $res0 != "OK" ]]; then
       echo "Download of $BITCOIN_NAME.tar.gz has the wrong sha256 checksum"
       echo "Aborting this Bash script"
       # Don't leave traces. Avoid that we run into trouble when downloading the next version
       \rm SHA256SUMS
-      \rm SHA256SUMS.asc
       exit
     else
       fecho "Download of bitcoin core OK"
     fi
     # Don't leave traces. Avoid that we run into trouble when downloading the next version
     \rm SHA256SUMS
-    \rm SHA256SUMS.asc
   else
     fecho "Skip: check the bitcoin core download"
   fi
@@ -155,10 +162,23 @@ if [ $do_compile_bitcoin_core = 1 ]; then
     echo "Aborting this Bash script"
     exit
   fi
-  fecho "Executing cmake -B build including GUI"
-  cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON
-  # faster cmake
-  #cmake -B build -DWITH_ZMQ=ON -DBUILD_TESTS=OFF
+  fecho "Executing cmake -B build for specified compile options" 
+  if [ $do_compile_tests = 1 ] && [ $do_compile_gui = 1 ]; then
+    fecho "Executing cmake -B build with gui and tests" 
+    cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON -DBUILD_TESTS=ON
+  fi
+  if [ $do_compile_tests = 0 ] && [ $do_compile_gui = 1 ]; then
+    fecho "Executing cmake -B build with gui but without tests" 
+    cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=ON -DBUILD_TESTS=OFF
+  fi
+  if [ $do_compile_tests = 1 ] && [ $do_compile_gui = 0 ]; then
+    fecho "Executing cmake -B build with tests but without gui" 
+    cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=OFF -DBUILD_TESTS=ON
+  fi
+  if [ $do_compile_tests = 0 ] && [ $do_compile_gui = 0 ]; then
+    fecho "Executing cmake -B build without gui and without tests" 
+    cmake -B build -DWITH_ZMQ=ON -DBUILD_GUI=OFF -DBUILD_TESTS=OFF
+  fi
 
   fecho "Executing cmake --build build"
   cmake --build build
@@ -206,11 +226,17 @@ if [ $do_test_bitcoin_core = 1 ]; then
   dnexab $HOME/$BITCOIN_NAME/build/bin
   cd $HOME/$BITCOIN_NAME/build/bin
   ./test_bitcoin
-  fecho "Testing bitcoin-qt"
-  ./test_bitcoin-qt
+  if [ $do_compile_gui = 1 ] && [ $do_compile_tests = 1 ]; then
+    fecho "Testing bitcoin-qt"
+    ./test_bitcoin-qt
+  else
+    fecho "Skip: test bitcoin-qt"
+  fi
 else
   fecho "Skip: test bitcoin core"
 fi
 
 # Move back to the home directory
 cd $HOME
+
+fecho "End of script maken.sh"
