@@ -137,7 +137,7 @@ if [ $do_install_packages = 1 ]; then
   fecho "Installing packages via sudo (password probably needed)"
 
   # Install packages
-  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev sqlite3 libsqlite3-dev libzmq3-dev
+  sudo apt-get install make cmake libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libboost-all-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libqrencode-dev sqlite3 libsqlite3-dev libzmq3-dev qt6-base-dev qt6-qmltooling-plugins linguist-qt6 qt6-tools-dev qt6-l10n-tools qt6-tools-dev-tools libgl-dev qt6-wayland libcapnp-dev capnproto
 else
   fecho "Skip: install packages"
 fi
