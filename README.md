@@ -24,11 +24,3 @@ Bitcoin Core is downloaded from https://bitcoincore.org/bin.
 Total compilation time will be on the order of an hour.
 
 The shell script name "maken" means "to make" in Dutch.
-
-**Extra:**
-
-To compile Bitcoin Core for legacy wallets, use `maken_legacy_wallets.sh` which also downloads and compiles BERKELEY-DB necessary for legacy wallets.
-
-For Bitcoin Core 28.1 and lower `autotools` is applied, while for 29.0 or higher `cmake`.
-
-For Bitcoin Core versions 28.1 or lower find `bitcoind` and `bitcoin-cli` in `$HOME/bitcoin-28.1/src` and bitcoin-qt in `$HOME/bitcoin-28.1/src/qt` For version 29.0 and higher find `bitcoind`, `bitcoin-cli` and `bitcoin-qt` in `$HOME/bitcoin-29.0/build/bin`
