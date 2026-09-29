@@ -6,8 +6,8 @@
 # You'll find bitcoind,bitcoin-cli and bitcoin-qt in $HOME/bitcoin-29.0/build/bin
 #
 # Usage:
-# ./maken.sh 29.0
-# to download and compile Bitcoin Core version 29.0
+# ./maken.sh 31.0
+# to download and compile Bitcoin Core version 31.0
 #
 
 # Set the "do"-variables to 1 or 0 to execute or
@@ -20,7 +20,7 @@ do_compile_bitcoin_core=1 # Compile Bitcoin Core
 do_compile_tests=1 # Compile Bitcoin Core test code
 do_compile_gui=1 # Compile Bitcoin Core GUI
 do_strip_bitcoin_core=1 # Strip the executables of debug symbols
-do_install_bitcoin_core=1 # Intall Bitcoin Core system wide
+do_install_bitcoin_core=1 # Intall Bitcoin Core system wide (in /usr/local/bin)
 do_test_bitcoin_core=1 # Test Bitcoin Core
 
 # Echo with sleep and newlines
